@@ -15,11 +15,11 @@ button.g{background:#2a2522}
 .pick{margin-top:8px;font-size:13px;color:var(--mute)}.pick input{width:auto;padding:6px 10px;font-size:14px;margin-left:6px}
 .note{font-size:12.5px;color:var(--mute);margin-top:8px}
 a{color:#ffb39a}
-</style></head><body><div id="메뉴" style="position:sticky;top:0;z-index:9;display:flex;gap:8px;flex-wrap:wrap;background:#0f1117;padding:10px 0 12px;margin-bottom:10px;border-bottom:1px solid #262a36"><a href="/" style="background:#232737;color:#e8e8ec;text-decoration:none;font-weight:800;padding:10px 14px;border-radius:10px;font-size:15px">대시보드</a><a href="/틀폼.html" style="background:#fff;color:#0f1117;text-decoration:none;font-weight:800;padding:10px 14px;border-radius:10px;font-size:15px">틀 넣기 · 다 됐어</a><a href="/트렌드/삼성전자.html" style="background:#232737;color:#e8e8ec;text-decoration:none;font-weight:800;padding:10px 14px;border-radius:10px;font-size:15px">삼성전자 트렌드</a><a href="/트렌드/테슬라.html" style="background:#232737;color:#e8e8ec;text-decoration:none;font-weight:800;padding:10px 14px;border-radius:10px;font-size:15px">테슬라 트렌드</a><a href="/편집.html" style="background:#232737;color:#3ddc84;text-decoration:none;font-weight:800;padding:10px 14px;border-radius:10px;font-size:15px">편집자용</a></div>
+</style></head><body><div id="메뉴" style="position:sticky;top:0;z-index:9;display:flex;gap:8px;flex-wrap:wrap;background:#0f1117;padding:10px 0 12px;margin-bottom:10px;border-bottom:1px solid #262a36"><a href="./" style="background:#232737;color:#e8e8ec;text-decoration:none;font-weight:800;padding:10px 14px;border-radius:10px;font-size:15px">대시보드</a><a href="./틀폼.html" style="background:#fff;color:#0f1117;text-decoration:none;font-weight:800;padding:10px 14px;border-radius:10px;font-size:15px">틀 넣기 · 다 됐어</a><a href="./트렌드/삼성전자.html" style="background:#232737;color:#e8e8ec;text-decoration:none;font-weight:800;padding:10px 14px;border-radius:10px;font-size:15px">삼성전자 트렌드</a><a href="./트렌드/테슬라.html" style="background:#232737;color:#e8e8ec;text-decoration:none;font-weight:800;padding:10px 14px;border-radius:10px;font-size:15px">테슬라 트렌드</a><a href="./편집.html" style="background:#232737;color:#3ddc84;text-decoration:none;font-weight:800;padding:10px 14px;border-radius:10px;font-size:15px">편집자용</a></div>
 <h1>틀 넣기</h1>
 <div class="sub">여기 적어 보내면 집 컴퓨터가 5분 안에 제목·썸네일을 바꿉니다.</div>
 
-<form class="card" name="틀" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/보냄.html">
+<form class="card" name="틀" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="./보냄.html">
   <input type="hidden" name="form-name" value="틀"><p hidden><input name="bot-field"></p>
   <b>제목·썸네일 틀</b>
   <label>올리는 날</label>
@@ -39,7 +39,7 @@ a{color:#ffb39a}
   <div class="note">보내면 제목·썸네일만 바뀝니다. 공개 범위·시각은 그대로(일부공개). 고정댓글 다신 뒤 아래 "다 됐어"를 보내 주세요.</div>
 </form>
 
-<form class="card" name="신호" method="POST" data-netlify="true" action="/보냄.html">
+<form class="card" name="신호" method="POST" data-netlify="true" action="./보냄.html">
   <input type="hidden" name="form-name" value="신호">
   <b>다 됐어 (고정댓글 달았음 → 예약으로 되돌리기)</b>
   <label>올리는 날</label>
