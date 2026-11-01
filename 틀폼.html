@@ -2,21 +2,21 @@
 <html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>틀 넣기</title>
 <style>
-:root{--bg:#23201C;--card:#2E2A25;--line:#FBF6EC;--ink:#FBF6EC;--mute:#B9B0A0;--acc:#FF8A4C;--btn:#FFC480;--ok:#5FE39A}
+:root{--bg:#000;--card:#070707;--line:#F2E9D8;--ink:#F2E9D8;--mute:#9a9480;--acc:#FFC480;--btn:#FFC480;--ok:#3DDC84}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 "JetBrains Mono","D2Coding","Cascadia Mono",Consolas,"Pretendard","Malgun Gothic",monospace;padding:14px 18px 40px;max-width:600px;margin:0 auto}
-h1{font-size:22px;margin:0 0 4px;display:inline-block;color:#111;background:var(--btn);border:2.5px solid var(--line);box-shadow:4px 4px 0 var(--line);padding:2px 12px;border-radius:6px}.sub{color:var(--mute);font-size:13px;margin:10px 0 16px}
-.card{background:var(--card);border:2.5px solid var(--line);box-shadow:5px 5px 0 var(--line);border-radius:8px;padding:16px;margin-bottom:20px}
+h1{font-size:22px;margin:0 0 4px;display:inline-block;color:#111;background:var(--btn);border:2px solid #111;box-shadow:4px 4px 0 #3a3a3a;padding:2px 12px;border-radius:6px}.sub{color:var(--mute);font-size:13px;margin:10px 0 16px}
+.card{background:var(--card);border:2.5px solid var(--line);box-shadow:4px 4px 0 #3a3a3a;border-radius:8px;padding:16px;margin-bottom:20px}
 label{display:block;font-size:13px;color:var(--mute);margin:12px 0 6px}
-input,select,textarea{width:100%;font:inherit;padding:12px;border-radius:6px;border:2px solid var(--line);background:#38332D;color:var(--ink)}
+input,select,textarea{width:100%;font:inherit;padding:12px;border-radius:6px;border:2px solid var(--line);background:#0d0d0d;color:var(--ink)}
 textarea{min-height:70px}
-button{width:100%;font:inherit;font-weight:800;font-size:17px;padding:13px;border:2.5px solid var(--line);border-radius:8px;background:var(--btn);color:#111;margin-top:12px;box-shadow:4px 4px 0 var(--line);cursor:pointer}button:active{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--line)}
-button.g{background:#38332D;color:var(--ink)}button.t{background:#9CC4FF;color:#111}
-.days{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.days button{margin:0;padding:12px 6px;font-size:16px;background:#38332D;color:var(--ink);box-shadow:3px 3px 0 var(--line)}.days button.on{background:var(--acc);color:#fff}.days small{display:block;font-size:12px;font-weight:500;opacity:.85}
+button{width:100%;font:inherit;font-weight:800;font-size:17px;padding:13px;border:2.5px solid var(--line);border-radius:8px;background:var(--btn);color:#111;margin-top:12px;box-shadow:4px 4px 0 #3a3a3a;cursor:pointer}button:active{transform:translate(2px,2px);box-shadow:2px 2px 0 #3a3a3a}
+button.g{background:#0d0d0d;color:var(--ink)}button.t{background:#9CC4FF;color:#111}
+.days{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.days button{margin:0;padding:12px 6px;font-size:16px;background:#0d0d0d;color:var(--ink);box-shadow:3px 3px 0 #3a3a3a}.days button.on{background:var(--acc);color:#111}.days small{display:block;font-size:12px;font-weight:500;opacity:.85}
 .pick{margin-top:10px;font-size:13px;color:var(--mute)}.pick input{width:auto;padding:6px 10px;font-size:14px;margin-left:6px}
 .note{font-size:12.5px;color:var(--mute);margin-top:10px}
-.out{display:none;margin-top:12px}.out textarea{min-height:150px;font-size:14px;background:#38332D}.out.show{display:block}.out b{display:block;margin-bottom:6px;color:var(--ok)}
+.out{display:none;margin-top:12px}.out textarea{min-height:150px;font-size:14px;background:#0d0d0d}.out.show{display:block}.out b{display:block;margin-bottom:6px;color:var(--ok)}
 a{color:#FFB38A}
-</style></head><body><div id="메뉴" style="position:sticky;top:0;z-index:9;display:flex;gap:10px;flex-wrap:wrap;background:#23201C;padding:10px 0 12px;margin-bottom:10px;border-bottom:2.5px solid #FBF6EC"><a href="./" style="background:#38332D;color:#FBF6EC;text-decoration:none;font-weight:800;padding:10px 14px;border-radius:10px;font-size:15px">대시보드</a><a href="./틀폼.html" style="background:#FBF6EC;color:#111;text-decoration:none;font-weight:800;padding:10px 14px;border-radius:10px;font-size:15px">틀 넣기 · 다 됐어</a><a href="./트렌드/삼성전자.html" style="background:#38332D;color:#FBF6EC;text-decoration:none;font-weight:800;padding:10px 14px;border-radius:10px;font-size:15px">삼성전자 트렌드</a><a href="./트렌드/테슬라.html" style="background:#38332D;color:#FBF6EC;text-decoration:none;font-weight:800;padding:10px 14px;border-radius:10px;font-size:15px">테슬라 트렌드</a><a href="./편집.html" style="background:#38332D;color:#5FE39A;text-decoration:none;font-weight:800;padding:10px 14px;border-radius:10px;font-size:15px">편집자용</a></div>
+</style></head><body><div id="메뉴" style="position:sticky;top:0;z-index:9;display:flex;gap:10px;flex-wrap:wrap;background:#000;padding:10px 0 12px;margin-bottom:10px;border-bottom:2px solid #F2E9D8"><a href="./" style="background:#0d0d0d;color:#F2E9D8;text-decoration:none;font-weight:800;padding:10px 14px;border-radius:10px;font-size:15px">대시보드</a><a href="./틀폼.html" style="background:#F2E9D8;color:#111;text-decoration:none;font-weight:800;padding:10px 14px;border-radius:10px;font-size:15px">틀 넣기 · 다 됐어</a><a href="./트렌드/삼성전자.html" style="background:#0d0d0d;color:#F2E9D8;text-decoration:none;font-weight:800;padding:10px 14px;border-radius:10px;font-size:15px">삼성전자 트렌드</a><a href="./트렌드/테슬라.html" style="background:#0d0d0d;color:#F2E9D8;text-decoration:none;font-weight:800;padding:10px 14px;border-radius:10px;font-size:15px">테슬라 트렌드</a><a href="./편집.html" style="background:#0d0d0d;color:#3DDC84;text-decoration:none;font-weight:800;padding:10px 14px;border-radius:10px;font-size:15px">편집자용</a></div>
 <h1>틀 넣기</h1>
 <div class="sub">적고 "틀 보내기"를 누르면 바로 집 컴퓨터로 갑니다(1분 안에 받음). 안 될 때만 아래 텔레그램 단추를 쓰세요.</div>
 
