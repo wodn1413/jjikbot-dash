@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>틀 넣기</title>
+<style>
+:root{--bg:#000;--card:#0b0a09;--line:#2a2522;--ink:#f3f1ee;--mute:#9a948c;--acc:#ff6a3d;--ok:#3ddc84}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.5 Pretendard,"Malgun Gothic",system-ui,sans-serif;padding:14px 18px 40px;max-width:600px;margin:0 auto}
+h1{font-size:22px;margin:0 0 4px}.sub{color:var(--mute);font-size:13px;margin-bottom:16px}
+.card{background:var(--card);border:1px solid var(--line);border-top:2px solid var(--acc);border-radius:14px;padding:16px;margin-bottom:16px}
+label{display:block;font-size:13px;color:var(--mute);margin:12px 0 6px}
+input,select,textarea{width:100%;font:inherit;padding:12px;border-radius:10px;border:1px solid var(--line);background:#000;color:var(--ink)}
+textarea{min-height:70px}
+button{width:100%;font:inherit;font-weight:800;font-size:18px;padding:14px;border:0;border-radius:12px;background:var(--acc);color:#fff;margin-top:16px}
+button.g{background:#2a2522}
+.days{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.days button{margin:0;padding:12px 6px;font-size:16px;background:#1a1613;color:var(--ink);border:1px solid var(--line)}.days button.on{background:var(--acc);color:#fff;border-color:var(--acc)}.days small{display:block;font-size:12px;font-weight:500;opacity:.8}
+.pick{margin-top:8px;font-size:13px;color:var(--mute)}.pick input{width:auto;padding:6px 10px;font-size:14px;margin-left:6px}
+.note{font-size:12.5px;color:var(--mute);margin-top:8px}
+a{color:#ffb39a}
+</style></head><body><div id="메뉴" style="position:sticky;top:0;z-index:9;display:flex;gap:8px;flex-wrap:wrap;background:#0f1117;padding:10px 0 12px;margin-bottom:10px;border-bottom:1px solid #262a36"><a href="/" style="background:#232737;color:#e8e8ec;text-decoration:none;font-weight:800;padding:10px 14px;border-radius:10px;font-size:15px">대시보드</a><a href="/틀폼.html" style="background:#fff;color:#0f1117;text-decoration:none;font-weight:800;padding:10px 14px;border-radius:10px;font-size:15px">틀 넣기 · 다 됐어</a><a href="/트렌드/삼성전자.html" style="background:#232737;color:#e8e8ec;text-decoration:none;font-weight:800;padding:10px 14px;border-radius:10px;font-size:15px">삼성전자 트렌드</a><a href="/트렌드/테슬라.html" style="background:#232737;color:#e8e8ec;text-decoration:none;font-weight:800;padding:10px 14px;border-radius:10px;font-size:15px">테슬라 트렌드</a><a href="/편집.html" style="background:#232737;color:#3ddc84;text-decoration:none;font-weight:800;padding:10px 14px;border-radius:10px;font-size:15px">편집자용</a></div>
+<h1>틀 넣기</h1>
+<div class="sub">여기 적어 보내면 집 컴퓨터가 5분 안에 제목·썸네일을 바꿉니다.</div>
+
+<form class="card" name="틀" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/보냄.html">
+  <input type="hidden" name="form-name" value="틀"><p hidden><input name="bot-field"></p>
+  <b>제목·썸네일 틀</b>
+  <label>올리는 날</label>
+  <div class="days" data-for="날1"></div><input type="hidden" name="날" id="날1" required>
+  <div class="pick">다른 날이면 <input type="date" id="날1직접"></div>
+  <label>채널</label><select name="채널" required>
+    <option value="주식독학">주식독학 1편 (21시)</option>
+    <option value="주식독학_2">주식독학 2편 (12시)</option>
+    <option value="테슬라">테슬라 (18시)</option>
+    <option value="테슬라_2">테슬라 2편 (21시)</option>
+  </select>
+  <label>제목 (앞머리 [ 삼성전자 주가전망 ] 은 자동으로 붙음)</label><textarea name="제목" required placeholder="반도체 폭락 비상상황 발생! 진짜 큰일난건가?"></textarea>
+  <label>썸네일 윗줄 (노랑, 8~12자)</label><input name="윗줄" required placeholder="비상상황 발생!!">
+  <label>썸네일 아랫줄 (흰, 8~12자)</label><input name="아랫줄" required placeholder="다음주 '이것' 놀라지 마세요">
+  <label>사진 고르기 (선택 · 파일 이름에 든 말, 예 바닥지지)</label><input name="사진" placeholder="비우면 그날 날짜 사진">
+  <button type="submit">틀 보내기</button>
+  <div class="note">보내면 제목·썸네일만 바뀝니다. 공개 범위·시각은 그대로(일부공개). 고정댓글 다신 뒤 아래 "다 됐어"를 보내 주세요.</div>
+</form>
+
+<form class="card" name="신호" method="POST" data-netlify="true" action="/보냄.html">
+  <input type="hidden" name="form-name" value="신호">
+  <b>다 됐어 (고정댓글 달았음 → 예약으로 되돌리기)</b>
+  <label>올리는 날</label>
+  <div class="days" data-for="날2"></div><input type="hidden" name="날" id="날2" required>
+  <div class="pick">다른 날이면 <input type="date" id="날2직접"></div>
+  <label>채널</label><select name="채널" required>
+    <option value="주식독학">주식독학 1편</option>
+    <option value="주식독학_2">주식독학 2편</option>
+    <option value="테슬라">테슬라</option>
+    <option value="테슬라_2">테슬라 2편</option>
+    <option value="전부">그날 전부</option>
+  </select>
+  <input type="hidden" name="말" value="다 됐어">
+  <button type="submit" class="g">다 됐어 보내기</button>
+  <div class="note">예약 시각이 이미 지났으면 다음 인기 시각(7·12·18~22시) 빈 자리로 잡습니다.</div>
+</form>
+<script>
+const f=(x)=>x.getFullYear()+"-"+String(x.getMonth()+1).padStart(2,"0")+"-"+String(x.getDate()).padStart(2,"0");
+const 요일=["일","월","화","수","목","금","토"];
+document.querySelectorAll('.days').forEach(box=>{const id=box.dataset.for,hid=document.getElementById(id),직접=document.getElementById(id+'직접');
+  [["어제",-1],["오늘",0],["내일",1]].forEach(([n,d],i)=>{const dt=new Date();dt.setDate(dt.getDate()+d);const b=document.createElement('button');b.type='button';b.innerHTML=n+'<small>'+(dt.getMonth()+1)+'/'+dt.getDate()+' ('+요일[dt.getDay()]+')</small>';b.onclick=()=>{hid.value=f(dt);직접.value=f(dt);box.querySelectorAll('button').forEach(x=>x.classList.remove('on'));b.classList.add('on');};box.appendChild(b);if(d===0)b.click();});
+  직접.addEventListener('change',()=>{hid.value=직접.value;box.querySelectorAll('button').forEach(x=>x.classList.remove('on'));});});
+</script>
+</body></html>
