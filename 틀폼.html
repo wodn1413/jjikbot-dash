@@ -18,7 +18,7 @@ button.g{background:#2a2522}button.t{background:#2aabee}
 a{color:#ffb39a}
 </style></head><body><div id="메뉴" style="position:sticky;top:0;z-index:9;display:flex;gap:8px;flex-wrap:wrap;background:#0f1117;padding:10px 0 12px;margin-bottom:10px;border-bottom:1px solid #262a36"><a href="./" style="background:#232737;color:#e8e8ec;text-decoration:none;font-weight:800;padding:10px 14px;border-radius:10px;font-size:15px">대시보드</a><a href="./틀폼.html" style="background:#fff;color:#0f1117;text-decoration:none;font-weight:800;padding:10px 14px;border-radius:10px;font-size:15px">틀 넣기 · 다 됐어</a><a href="./트렌드/삼성전자.html" style="background:#232737;color:#e8e8ec;text-decoration:none;font-weight:800;padding:10px 14px;border-radius:10px;font-size:15px">삼성전자 트렌드</a><a href="./트렌드/테슬라.html" style="background:#232737;color:#e8e8ec;text-decoration:none;font-weight:800;padding:10px 14px;border-radius:10px;font-size:15px">테슬라 트렌드</a><a href="./편집.html" style="background:#232737;color:#3ddc84;text-decoration:none;font-weight:800;padding:10px 14px;border-radius:10px;font-size:15px">편집자용</a></div>
 <h1>틀 넣기</h1>
-<div class="sub">적고 "글 만들기"를 누르면 텔레그램에 보낼 글이 나옵니다. 그 글을 주식박스 알림 봇(@jusikbox_alert_bot)에 보내면 집 컴퓨터가 제목·썸네일을 바꿉니다.</div>
+<div class="sub">적고 "틀 보내기"를 누르면 바로 집 컴퓨터로 갑니다(1분 안에 받음). 안 될 때만 아래 텔레그램 단추를 쓰세요.</div>
 
 <div class="card">
   <b>제목·썸네일 틀</b>
@@ -34,9 +34,9 @@ a{color:#ffb39a}
   <label>썸네일 윗줄 (노랑, 8~12자)</label><input id="윗줄" placeholder="비상상황 발생!!">
   <label>썸네일 아랫줄 (흰, 8~12자)</label><input id="아랫줄" placeholder="다음주 '이것' 놀라지 마세요">
   <label>사진 고르기 (선택 · 파일 이름에 든 말, 예 바닥지지)</label><input id="사진" placeholder="비우면 그날 날짜 사진">
-  <button type="button" onclick="틀글()">글 만들기</button>
-  <div class="out" id="out1"><textarea id="글1" readonly></textarea>
-    <button type="button" class="t" onclick="보내기('글1')">텔레그램으로 보내기</button>
+  <button type="button" onclick="틀글()">틀 보내기</button>
+  <div class="out" id="out1"><b id="상태1"></b><textarea id="글1" readonly></textarea>
+    <button type="button" class="t" onclick="보내기('글1')">안 되면 텔레그램으로 보내기</button>
     <button type="button" class="g" onclick="복사('글1')">글 복사하고 봇 열기</button>
   </div>
   <div class="note">보내면 제목·썸네일만 바뀝니다. 공개 범위·시각은 그대로(일부공개). 고정댓글 다신 뒤 아래 "다 됐어"를 보내 주세요.</div>
@@ -53,15 +53,16 @@ a{color:#ffb39a}
     <option value="테슬라">테슬라</option>
     <option value="">그날 전부</option>
   </select>
-  <button type="button" onclick="됐어글()">텔레그램 열어 보내기 (열리면 "시작" 한 번)</button>
-  <div class="out" id="out2"><textarea id="글2" readonly></textarea>
-    <button type="button" class="t" onclick="보내기('글2')">텔레그램으로 보내기</button>
+  <button type="button" onclick="됐어글()">다 됐어 보내기</button>
+  <div class="out" id="out2"><b id="상태2"></b><textarea id="글2" readonly></textarea>
+    <button type="button" class="t" onclick="보내기('글2')">안 되면 텔레그램으로 보내기</button>
     <button type="button" class="g" onclick="복사('글2')">글 복사하고 봇 열기</button>
   </div>
   <div class="note">예약 시각이 이미 지났으면 다음 인기 시각(7·12·18~22시) 빈 자리로 잡습니다.</div>
 </div>
 <script>
-const 봇='https://t.me/jusikbox_alert_bot';
+const 봇='https://t.me/jusikbox_alert_bot', 설문='https://docs.google.com/forms/d/e/1FAIpQLSeBdbfpt0WiF4dvseIEs-7otufSdC4KY8HCSZDcJznM0q6eXA/formResponse', 칸='entry.1521054935';
+async function 설문보내기(글,상자){상자.textContent='보내는 중…';try{const fd=new FormData();fd.append(칸,글);await fetch(설문,{method:'POST',mode:'no-cors',body:fd});상자.textContent='보냈습니다 ✓ 집 컴퓨터가 1분 안에 받습니다.';return true;}catch(e){상자.textContent='못 보냈습니다 — 아래 단추로 텔레그램에 보내 주세요.';return false;}}
 const f=(x)=>x.getFullYear()+"-"+String(x.getMonth()+1).padStart(2,"0")+"-"+String(x.getDate()).padStart(2,"0");
 const 요일=["일","월","화","수","목","금","토"];
 const 말날=(s)=>{const [y,m,d]=s.split("-").map(Number);return m+"월 "+d+"일";};
@@ -71,8 +72,8 @@ document.querySelectorAll('.days').forEach(box=>{const id=box.dataset.for,hid=do
 const v=(id)=>document.getElementById(id).value.trim();
 function 틀글(){if(!v('제목')||!v('윗줄')||!v('아랫줄')){alert('제목·윗줄·아랫줄을 다 적어 주세요');return;}
   const 줄=[말날(v('날1'))+' 업로드','','['+v('채널1')+']','  제목 : '+v('제목'),'  썸네일 윗줄 : '+v('윗줄'),'  썸네일 아랫줄 : '+v('아랫줄')];if(v('사진'))줄.push('  사진 : '+v('사진'));
-  document.getElementById('글1').value=줄.join('\n');document.getElementById('out1').classList.add('show');}
-function 됐어글(){const ch=v('채널2');document.getElementById('글2').value='다 됐어 '+말날(v('날2'))+(ch?' '+ch:'');document.getElementById('out2').classList.add('show');const [y,m,d]=v('날2').split('-');location.href='https://t.me/jusikbox_alert_bot?start=ok_'+m+d;}
+  document.getElementById('글1').value=줄.join('\n');document.getElementById('out1').classList.add('show');설문보내기(줄.join('\n'),document.getElementById('상태1'));}
+function 됐어글(){const ch=v('채널2');const 글='다 됐어 '+말날(v('날2'))+(ch?' '+ch:'');document.getElementById('글2').value=글;document.getElementById('out2').classList.add('show');설문보내기(글,document.getElementById('상태2'));}
 function 보내기(id){const t=document.getElementById(id).value;location.href='https://t.me/share/url?url='+encodeURIComponent(t);}
 async function 복사(id){const t=document.getElementById(id).value;try{await navigator.clipboard.writeText(t);}catch(e){document.getElementById(id).select();document.execCommand('copy');}window.open(봇,'_blank');}
 </script>
