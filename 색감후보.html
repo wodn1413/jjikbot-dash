@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>대시보드 색감 후보 3가지</title>
+<style>
+body{margin:0;background:#1a1a1a;color:#ddd;font:14px/1.5 Pretendard,"Malgun Gothic",system-ui,sans-serif;padding:20px}
+h1{font-size:18px;margin:0 0 6px;color:#fff}.lead{color:#999;font-size:13px;margin-bottom:18px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+@media(max-width:1100px){.grid{grid-template-columns:1fr}}
+.frame{border-radius:14px;overflow:hidden;border:1px solid #333}
+.name{padding:10px 14px;background:#111;color:#fff;font-weight:800;font-size:15px;border-bottom:1px solid #333}.name small{display:block;font-weight:500;color:#999;font-size:12px}
+.mini{padding:16px;min-height:560px}
+.mini .top{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.mini .brand{font-size:22px;font-weight:900;margin:0 0 12px}
+.mini .sec{margin-bottom:12px;padding:12px 14px}
+.mini h2{font-size:12px;margin:0 0 8px;letter-spacing:.04em;text-transform:uppercase}
+.mini .big{font-size:30px;font-weight:800;letter-spacing:-.02em;line-height:1.1}.mini .sm{font-size:12px}
+.mini .tiles{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}.mini .tile{padding:8px 10px}.mini .tile b{display:block;font-size:20px}.mini .tile small{font-size:11px}
+.mini .ch{display:flex;align-items:center;gap:10px;padding:8px 0}.mini .logo{width:28px;height:28px;border-radius:50%;display:inline-block}
+.mini .cards{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}.mini .card{padding:8px 10px;font-size:12px}.mini .card b{display:block;font-size:13px}
+.mini .map{height:110px;border-radius:10px;position:relative;overflow:hidden}
+.mini .dot{position:absolute;width:26px;height:26px;border-radius:50%}
+/* A. 프리미엄 다크 (리니어·버셀 느낌) */
+.a{background:#0B0C10;color:#E6E8EE;font-family:Pretendard,Inter,system-ui,sans-serif}
+.a .top a{padding:6px 12px;border-radius:8px;background:#15171D;color:#C9CDD6;border:1px solid #23262E;font-size:12px}.a .top a.on{background:#E6E8EE;color:#0B0C10;border-color:#E6E8EE}.a .top a.key{background:#6C8CFF;color:#fff;border-color:#6C8CFF}
+.a .brand{color:#fff}.a .brand span{color:#6C8CFF}
+.a .sec{background:#121418;border:1px solid #1F2229;border-radius:12px;box-shadow:0 1px 0 rgba(255,255,255,.03) inset,0 10px 30px rgba(0,0,0,.35)}
+.a h2{color:#7C8291}.a .sm{color:#8B919E}.a .pill{display:inline-block;background:rgba(108,140,255,.15);color:#9DB3FF;border-radius:999px;padding:1px 8px;font-size:11px;font-weight:700}
+.a .tile{background:#0F1115;border:1px solid #1F2229;border-radius:10px}.a .tile small{color:#7C8291}
+.a .ch{border-bottom:1px solid #1C1F26}.a .logo{background:linear-gradient(135deg,#6C8CFF,#A78BFA)}
+.a .card{background:#0F1115;border:1px solid #1F2229;border-radius:10px}.a .card.ok{border-color:#1F6F4A;color:#7EE2B0}.a .card.ing{border-color:#5B4A1F;color:#F2C879}
+.a .map{background:radial-gradient(ellipse at 40% 50%,#1b1f36,#0B0C10 70%)}.a .dot{background:radial-gradient(circle,#fff,#6C8CFF 40%,rgba(108,140,255,0) 70%)}
+/* B. 블룸버그 단말기 느낌 */
+.b{background:#000;color:#F2E9D8;font-family:"JetBrains Mono","Cascadia Mono",Consolas,"D2Coding",monospace}
+.b .top a{padding:5px 10px;background:#000;color:#F5A623;border:1px solid #F5A623;font-size:12px;letter-spacing:.02em}.b .top a.on{background:#F5A623;color:#000}.b .top a.key{background:#F5A623;color:#000}
+.b .brand{color:#F5A623;text-transform:uppercase;letter-spacing:.08em}
+.b .sec{background:#050505;border:1px solid #2a2a2a;border-top:2px solid #F5A623;border-radius:2px}
+.b h2{color:#F5A623}.b .sm{color:#9a9480}.b .pill{color:#3DDC84;font-weight:700;font-size:12px}
+.b .tile{background:#000;border:1px solid #2a2a2a;border-radius:2px}.b .tile small{color:#9a9480}.b .tile b{color:#F5A623}
+.b .ch{border-bottom:1px dashed #2a2a2a}.b .logo{background:#F5A623}
+.b .card{background:#000;border:1px solid #2a2a2a;border-radius:2px}.b .card.ok{color:#3DDC84;border-color:#1f5a3a}.b .card.ing{color:#F5A623;border-color:#5a4215}
+.b .map{background:#000;border:1px solid #2a2a2a;background-image:linear-gradient(#111 1px,transparent 1px),linear-gradient(90deg,#111 1px,transparent 1px);background-size:14px 14px}.b .dot{background:radial-gradient(circle,#fff,#F5A623 40%,rgba(245,166,35,0) 70%)}
+/* C. 딥 네이비 글래스 (애플 느낌) */
+.c{background:radial-gradient(1200px 600px at 20% -10%,#1d2b53 0%,#0d1326 45%,#070a16 100%);color:#EAF0FF;font-family:Pretendard,"SF Pro",system-ui,sans-serif}
+.c .top a{padding:6px 12px;border-radius:999px;background:rgba(255,255,255,.08);color:#DCE4FF;border:1px solid rgba(255,255,255,.12);font-size:12px;backdrop-filter:blur(8px)}.c .top a.on{background:#fff;color:#0d1326}.c .top a.key{background:linear-gradient(135deg,#FF8A5B,#FF5E8A);color:#fff;border:0}
+.c .brand{color:#fff}.c .brand span{background:linear-gradient(90deg,#8EC5FF,#C3A6FF);-webkit-background-clip:text;color:transparent}
+.c .sec{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:16px;backdrop-filter:blur(14px);box-shadow:0 20px 50px rgba(0,0,0,.35)}
+.c h2{color:#9FB0D9}.c .sm{color:#9FB0D9}.c .pill{display:inline-block;background:rgba(142,197,255,.18);color:#BFE0FF;border-radius:999px;padding:1px 8px;font-size:11px;font-weight:700}
+.c .tile{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:12px}.c .tile small{color:#9FB0D9}
+.c .ch{border-bottom:1px solid rgba(255,255,255,.08)}.c .logo{background:linear-gradient(135deg,#8EC5FF,#FF8A5B)}
+.c .card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:12px}.c .card.ok{color:#8EF0C0;border-color:rgba(142,240,192,.4)}.c .card.ing{color:#FFD08A;border-color:rgba(255,208,138,.4)}
+.c .map{background:radial-gradient(ellipse at 50% 50%,#1a2a5a,#070a16 75%)}.c .dot{background:radial-gradient(circle,#fff,#8EC5FF 40%,rgba(142,197,255,0) 70%)}
+</style></head><body>
+<h1>대시보드 색감 후보 3가지</h1>
+<div class="lead">같은 칸들을 세 가지 분위기로 그려 봤습니다. 마음에 드는 번호를 말씀해 주세요. 섞어 달라고 하셔도 됩니다.</div>
+<div class="grid">
+<div class="frame"><div class="name">① 프리미엄 다크<small>리니어·버셀 같은 소프트웨어 회사 화면. 아주 어두운 남회색, 얇은 선, 한 가지 포인트색(파랑)</small></div>
+<div class="mini a">
+  <div class="top"><a class="on">대시보드</a><a class="key">틀 넣기 · 다 됐어</a><a>삼성전자 트렌드</a><a>테슬라 트렌드</a><a>편집자용</a></div>
+  <div class="brand">찍봇 <span>·</span> <span class="sm" style="font-weight:500">11.02 03:20 기준</span></div>
+  <div class="sec"><h2>유튜브 · 구독자</h2><div style="display:flex;gap:28px"><div><div class="big">3,157,302<span class="sm"> 회</span></div><div class="sm">조회수 합계 <span class="pill">↑ 21,849</span></div></div><div><div class="big">194,969<span class="sm"> 명</span></div><div class="sm">구독자 합계</div></div></div></div>
+  <div class="sec"><h2>찍봇 지도</h2><div class="map"><span class="dot" style="left:18%;top:30%"></span><span class="dot" style="left:48%;top:20%;width:36px;height:36px"></span><span class="dot" style="left:72%;top:45%"></span><span class="dot" style="left:35%;top:62%"></span></div></div>
+  <div class="sec"><h2>오늘 영상</h2><div class="cards"><div class="card ing"><b>주식독학</b>진행 중</div><div class="card ok"><b>주식독학_2</b>끝 ✓</div><div class="card ok"><b>테슬라</b>끝 ✓</div></div></div>
+  <div class="sec"><h2>채널별</h2><div class="ch"><span class="logo"></span><div><b>주식독학</b><div class="sm">1,500,323 회 · 구독 5,970</div></div></div><div class="ch"><span class="logo"></span><div><b>테슬라</b><div class="sm">777,600 회 · 구독 1,110</div></div></div></div>
+  <div class="tiles"><div class="tile"><small>이번 주 올림</small><b>4</b></div><div class="tile"><small>오늘 완성</small><b>4</b></div><div class="tile"><small>채널</small><b>8</b></div></div>
+</div></div>
+<div class="frame"><div class="name">② 블룸버그 단말기<small>증권 단말기 느낌. 검정 바탕, 주황 글자, 타자기 글꼴, 격자. "돈 냄새" 나는 화면</small></div>
+<div class="mini b">
+  <div class="top"><a class="on">대시보드</a><a class="key">틀 넣기 · 다 됐어</a><a>삼성전자 트렌드</a><a>테슬라 트렌드</a><a>편집자용</a></div>
+  <div class="brand">JJIKBOT <span class="sm" style="letter-spacing:0;text-transform:none;font-weight:500">11.02 03:20 KST</span></div>
+  <div class="sec"><h2>VIEWS / SUBS</h2><div style="display:flex;gap:28px"><div><div class="big">3,157,302</div><div class="sm">조회수 합계 <span class="pill">▲21,849</span></div></div><div><div class="big">194,969</div><div class="sm">구독자 합계</div></div></div></div>
+  <div class="sec"><h2>MAP</h2><div class="map"><span class="dot" style="left:18%;top:30%"></span><span class="dot" style="left:48%;top:20%;width:36px;height:36px"></span><span class="dot" style="left:72%;top:45%"></span><span class="dot" style="left:35%;top:62%"></span></div></div>
+  <div class="sec"><h2>TODAY</h2><div class="cards"><div class="card ing"><b>주식독학</b>진행 중</div><div class="card ok"><b>주식독학_2</b>끝 ✓</div><div class="card ok"><b>테슬라</b>끝 ✓</div></div></div>
+  <div class="sec"><h2>CHANNELS</h2><div class="ch"><span class="logo"></span><div><b>주식독학</b><div class="sm">1,500,323 회 · 구독 5,970</div></div></div><div class="ch"><span class="logo"></span><div><b>테슬라</b><div class="sm">777,600 회 · 구독 1,110</div></div></div></div>
+  <div class="tiles"><div class="tile"><small>이번 주 올림</small><b>4</b></div><div class="tile"><small>오늘 완성</small><b>4</b></div><div class="tile"><small>채널</small><b>8</b></div></div>
+</div></div>
+<div class="frame"><div class="name">③ 딥 네이비 글래스<small>애플 같은 느낌. 짙은 남색 그라데이션, 반투명 유리 카드, 부드러운 빛</small></div>
+<div class="mini c">
+  <div class="top"><a class="on">대시보드</a><a class="key">틀 넣기 · 다 됐어</a><a>삼성전자 트렌드</a><a>테슬라 트렌드</a><a>편집자용</a></div>
+  <div class="brand"><span>찍봇</span> <span class="sm" style="font-weight:500;color:#9FB0D9;-webkit-text-fill-color:#9FB0D9">11.02 03:20 기준</span></div>
+  <div class="sec"><h2>유튜브 · 구독자</h2><div style="display:flex;gap:28px"><div><div class="big">3,157,302<span class="sm"> 회</span></div><div class="sm">조회수 합계 <span class="pill">↑ 21,849</span></div></div><div><div class="big">194,969<span class="sm"> 명</span></div><div class="sm">구독자 합계</div></div></div></div>
+  <div class="sec"><h2>찍봇 지도</h2><div class="map"><span class="dot" style="left:18%;top:30%"></span><span class="dot" style="left:48%;top:20%;width:36px;height:36px"></span><span class="dot" style="left:72%;top:45%"></span><span class="dot" style="left:35%;top:62%"></span></div></div>
+  <div class="sec"><h2>오늘 영상</h2><div class="cards"><div class="card ing"><b>주식독학</b>진행 중</div><div class="card ok"><b>주식독학_2</b>끝 ✓</div><div class="card ok"><b>테슬라</b>끝 ✓</div></div></div>
+  <div class="sec"><h2>채널별</h2><div class="ch"><span class="logo"></span><div><b>주식독학</b><div class="sm">1,500,323 회 · 구독 5,970</div></div></div><div class="ch"><span class="logo"></span><div><b>테슬라</b><div class="sm">777,600 회 · 구독 1,110</div></div></div></div>
+  <div class="tiles"><div class="tile"><small>이번 주 올림</small><b>4</b></div><div class="tile"><small>오늘 완성</small><b>4</b></div><div class="tile"><small>채널</small><b>8</b></div></div>
+</div></div>
+</div>
+</body></html>
