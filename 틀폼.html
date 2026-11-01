@@ -53,7 +53,7 @@ a{color:#ffb39a}
     <option value="테슬라">테슬라</option>
     <option value="">그날 전부</option>
   </select>
-  <button type="button" class="g" onclick="됐어글()">글 만들기</button>
+  <button type="button" onclick="됐어글()">텔레그램 열어 보내기 (열리면 "시작" 한 번)</button>
   <div class="out" id="out2"><textarea id="글2" readonly></textarea>
     <button type="button" class="t" onclick="보내기('글2')">텔레그램으로 보내기</button>
     <button type="button" class="g" onclick="복사('글2')">글 복사하고 봇 열기</button>
@@ -72,7 +72,7 @@ const v=(id)=>document.getElementById(id).value.trim();
 function 틀글(){if(!v('제목')||!v('윗줄')||!v('아랫줄')){alert('제목·윗줄·아랫줄을 다 적어 주세요');return;}
   const 줄=[말날(v('날1'))+' 업로드','','['+v('채널1')+']','  제목 : '+v('제목'),'  썸네일 윗줄 : '+v('윗줄'),'  썸네일 아랫줄 : '+v('아랫줄')];if(v('사진'))줄.push('  사진 : '+v('사진'));
   document.getElementById('글1').value=줄.join('\n');document.getElementById('out1').classList.add('show');}
-function 됐어글(){const ch=v('채널2');document.getElementById('글2').value='다 됐어 '+말날(v('날2'))+(ch?' '+ch:'');document.getElementById('out2').classList.add('show');}
+function 됐어글(){const ch=v('채널2');document.getElementById('글2').value='다 됐어 '+말날(v('날2'))+(ch?' '+ch:'');document.getElementById('out2').classList.add('show');const [y,m,d]=v('날2').split('-');location.href='https://t.me/jusikbox_alert_bot?start=ok_'+m+d;}
 function 보내기(id){const t=document.getElementById(id).value;location.href='https://t.me/share/url?url='+encodeURIComponent(t);}
 async function 복사(id){const t=document.getElementById(id).value;try{await navigator.clipboard.writeText(t);}catch(e){document.getElementById(id).select();document.execCommand('copy');}window.open(봇,'_blank');}
 </script>
