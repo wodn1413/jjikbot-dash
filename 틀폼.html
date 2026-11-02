@@ -60,6 +60,26 @@ a{color:#FFB38A}
   </div>
   <div class="note">예약 시각이 이미 지났으면 다음 인기 시각(7·12·18~22시) 빈 자리로 잡습니다.</div>
 </div>
+<div class="card" id="댓글칸">
+  <h2 style="margin:0 0 6px">고정댓글 멘트 · 복사해서 붙여 넣기</h2>
+  <div style="font-size:12.5px;color:#9a9480;margin-bottom:10px">일부공개로 올라간 영상에 고정댓글 다실 때 — 단추 누르면 복사됩니다. 신청 링크만 따로도 됩니다.</div>
+  <div style="font-weight:800;margin:8px 0 4px">주식독학</div>
+  <textarea id="멘트_독학" readonly rows="3" style="width:100%;font:inherit;padding:10px;border-radius:6px;border:2px solid #F2E9D8;background:#0d0d0d;color:#F2E9D8">시청해 주셔서 감사합니다!
+
+무료 템플릿 신청 방법 : https://m.site.naver.com/2iZY6</textarea>
+  <div style="display:flex;gap:8px;margin:6px 0 12px"><button type="button" onclick="복사('멘트_독학',this)">주식독학 멘트 복사</button><button type="button" onclick="복사글('https://m.site.naver.com/2iZY6',this)">링크만 복사</button></div>
+  <div style="font-weight:800;margin:8px 0 4px">테슬라</div>
+  <textarea id="멘트_테슬라" readonly rows="3" style="width:100%;font:inherit;padding:10px;border-radius:6px;border:2px solid #F2E9D8;background:#0d0d0d;color:#F2E9D8">🚀 테슬라의 다음 한 걸음, 오늘도 함께 지켜봐 주셔서 감사합니다.
+
+🎁 무료 템플릿 받기 👉 https://m.site.naver.com/2gW4O</textarea>
+  <div style="display:flex;gap:8px;margin:6px 0 4px"><button type="button" onclick="복사('멘트_테슬라',this)">테슬라 멘트 복사</button><button type="button" onclick="복사글('https://m.site.naver.com/2gW4O',this)">링크만 복사</button></div>
+</div>
+<script>
+function 복사글(t,btn){const 끝=()=>{const o=btn.textContent;btn.textContent='복사됨 ✓';setTimeout(()=>btn.textContent=o,1500);};
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(끝).catch(()=>옛복사(t,끝));}else 옛복사(t,끝);}
+function 옛복사(t,끝){const ta=document.createElement('textarea');ta.value=t;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');}catch(e){}document.body.removeChild(ta);끝();}
+function 복사(id,btn){복사글(document.getElementById(id).value,btn);}
+</script>
 <script>
 const 봇='https://t.me/jusikbox_alert_bot', 설문='https://docs.google.com/forms/d/e/1FAIpQLSeBdbfpt0WiF4dvseIEs-7otufSdC4KY8HCSZDcJznM0q6eXA/formResponse', 칸='entry.1521054935';
 async function 설문보내기(글,상자){상자.textContent='보내는 중…';try{const fd=new FormData();fd.append(칸,글);await fetch(설문,{method:'POST',mode:'no-cors',body:fd});상자.textContent='보냈습니다 ✓ 집 컴퓨터가 1분 안에 받습니다.';return true;}catch(e){상자.textContent='못 보냈습니다 — 아래 단추로 텔레그램에 보내 주세요.';return false;}}
