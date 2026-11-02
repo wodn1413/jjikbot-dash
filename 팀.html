@@ -17,6 +17,6 @@ function 그리기(){document.getElementById('달제목').textContent=Y+'년 '+(
 function 고르기(k){sel=k;그리기();}
 그리기();
 </script>
-<script>(function(){function 붙이기(u){try{var x=new URL(u,location.href);if(x.origin!==location.origin||!/.html$|/$/.test(x.pathname))return u;x.searchParams.set('t',Date.now().toString(36));return x.href;}catch(e){return u;}}
+<script>(function(){function 붙이기(u){try{var x=new URL(u,location.href);if(x.origin!==location.origin||!(x.pathname.endsWith('.html')||x.pathname.endsWith('/')))return u;x.searchParams.set('t',Date.now().toString(36));return x.href;}catch(e){return u;}}
 document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href]');if(!a||a.getAttribute('href').charAt(0)==='#'||a.target==='_blank')return;a.href=붙이기(a.getAttribute('href'));},true);
 var m=document.querySelector('meta[http-equiv="refresh"]');var s=m?parseInt(m.content,10):0;if(m)m.remove();if(s>0)setTimeout(function(){location.replace(붙이기(location.pathname));},s*1000);})();</script></body></html>
