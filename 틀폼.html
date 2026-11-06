@@ -86,7 +86,7 @@ function 멘트복사(id,btn){복사글(document.getElementById(id).value,btn);}
 </script>
 <script>
 const 봇='https://t.me/jusikbox_alert_bot', 설문='https://docs.google.com/forms/d/e/1FAIpQLSeBdbfpt0WiF4dvseIEs-7otufSdC4KY8HCSZDcJznM0q6eXA/formResponse', 칸='entry.1521054935';
-async function 설문보내기(글,상자){상자.textContent='보내는 중…';try{const fd=new FormData();fd.append(칸,글);await fetch(설문,{method:'POST',mode:'no-cors',body:fd});상자.textContent='보냈습니다 ✓ 집 컴퓨터가 1분 안에 받습니다.';return true;}catch(e){상자.textContent='못 보냈습니다 — 아래 단추로 텔레그램에 보내 주세요.';return false;}}
+async function 설문보내기(글,상자){상자.textContent='보내는 중…';try{const fd=new FormData();fd.append(칸,글);await fetch(설문,{method:'POST',mode:'no-cors',body:fd});상자.textContent='보냈습니다 ✓ 1분 안에 받습니다. (칸은 비웠습니다)';return true;}catch(e){상자.textContent='못 보냈습니다 — 아래 단추로 텔레그램에 보내 주세요.';return false;}}
 const f=(x)=>x.getFullYear()+"-"+String(x.getMonth()+1).padStart(2,"0")+"-"+String(x.getDate()).padStart(2,"0");
 const 요일=["일","월","화","수","목","금","토"];
 const 말날=(s)=>{const [y,m,d]=s.split("-").map(Number);return m+"월 "+d+"일";};
@@ -96,7 +96,7 @@ document.querySelectorAll('.days').forEach(box=>{const id=box.dataset.for,hid=do
 const v=(id)=>document.getElementById(id).value.trim();
 function 틀글(){if(!v('제목')||!v('윗줄')||!v('아랫줄')){alert('제목·윗줄·아랫줄을 다 적어 주세요');return;}
   const 줄=[말날(v('날1'))+' 업로드','','['+v('채널1')+']','  제목 : '+v('제목'),'  썸네일 윗줄 : '+v('윗줄'),'  썸네일 아랫줄 : '+v('아랫줄')];if(v('사진'))줄.push('  사진 : '+v('사진'));
-  document.getElementById('글1').value=줄.join('\n');document.getElementById('out1').classList.add('show');설문보내기(줄.join('\n'),document.getElementById('상태1'));}
+  document.getElementById('글1').value=줄.join('\n');document.getElementById('out1').classList.add('show');설문보내기(줄.join('\n'),document.getElementById('상태1')).then(ok=>{if(ok){for(const id of ['제목','윗줄','아랫줄','사진']){const e=document.getElementById(id);if(e)e.value='';}const t=document.getElementById('제목');if(t)t.focus();}});   /* 11/06 사장님: 보내면 칸 비우기 */}
 function 됐어글(){const ch=v('채널2');const 글='다 됐어 '+말날(v('날2'))+(ch?' '+ch:'');document.getElementById('글2').value=글;document.getElementById('out2').classList.add('show');설문보내기(글,document.getElementById('상태2'));}
 function 보내기(id){const t=document.getElementById(id).value;location.href='https://t.me/share/url?url='+encodeURIComponent(t);}
 async function 복사(id){const t=document.getElementById(id).value;try{await navigator.clipboard.writeText(t);}catch(e){document.getElementById(id).select();document.execCommand('copy');}window.open(봇,'_blank');}
