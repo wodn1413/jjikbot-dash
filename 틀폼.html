@@ -16,17 +16,37 @@ button.g{background:#0d0d0d;color:var(--ink)}button.t{background:#9CC4FF;color:#
 .note{font-size:12.5px;color:var(--mute);margin-top:10px}
 .out{display:none;margin-top:12px}.out textarea{min-height:150px;font-size:14px;background:#0d0d0d}.out.show{display:block}.out b{display:block;margin-bottom:6px;color:var(--ok)}
 a{color:#FFB38A}
-/* 11/06 사장님 "틀 넣을 때 트렌드를 못 보고 기억해서 써야 한다" — 같은 페이지 위에 트렌드를 띄워 보면서 쓴다 */
+/* 11/06 사장님 "틀 넣을 때 트렌드를 못 보고 기억해서 써야 한다" → "밑으로 쭉 내리면서 봐야 돼서 불편" — 제목·썸네일만 추린 목록을 폼 옆(넓은 화면) / 위(휴대폰)에 */
 .trbar{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}.trbar button{flex:1;min-width:120px;padding:10px;font-size:15px}
-#트렌드칸{display:none;position:sticky;top:0;z-index:5;background:#000;border:2.5px solid #FFC480;border-radius:8px;margin-bottom:12px}
-#트렌드칸.show{display:block}#트렌드칸 iframe{width:100%;height:46vh;border:0;border-radius:6px;background:#111}
-#트렌드칸 .tt{display:flex;justify-content:space-between;align-items:center;padding:4px 8px;color:#FFC480;font-size:13px}
+#트렌드칸{display:none;background:#000;border:2.5px solid #FFC480;border-radius:8px;margin-bottom:12px;overflow:hidden}
+#트렌드칸.show{display:flex;flex-direction:column}
+#트렌드칸 .tt{display:flex;gap:6px;align-items:center;padding:6px 8px;border-bottom:1.5px solid #3a3a3a;font-size:13px;color:#FFC480}
+#트렌드칸 .tt button{width:auto;margin:0;padding:4px 10px;font-size:13px;box-shadow:none}#트렌드칸 .tt button.on{background:#FFC480;color:#111}#트렌드칸 .tt button:not(.on){background:#0d0d0d;color:var(--ink)}
+#트렌드칸 .tt .when{margin-left:auto;color:var(--mute);font-size:12px}
+#트렌드목록{overflow-y:auto;max-height:46vh;padding:6px}
+.tr{display:grid;grid-template-columns:132px 1fr;gap:8px;padding:6px 2px;border-bottom:1px dashed #2a2a2a;cursor:pointer}.tr:hover{background:#151515}
+.tr img{width:132px;height:74px;object-fit:cover;border-radius:4px;background:#222}.tr .tl{font-size:13.5px;line-height:1.35;color:#F2E9D8}.tr .mt{font-size:11.5px;color:var(--mute);margin-top:3px}.tr .mt b{color:#FFC480;font-weight:700}
+.tr .rk{font-size:11px;color:#111;background:#FFC480;border-radius:3px;padding:0 4px;margin-right:4px}
+@media (min-width:1100px){body.tr-open{max-width:600px;margin:0 2vw 0 auto}body.tr-open #트렌드칸{position:fixed;left:2vw;top:14px;bottom:14px;width:calc(96vw - 640px);max-width:980px;margin:0}body.tr-open #트렌드목록{max-height:none;flex:1}body.tr-open .tr{grid-template-columns:168px 1fr}body.tr-open .tr img{width:168px;height:94px}body.tr-open .tr .tl{font-size:15px}}
 </style></head><body><div id="메뉴" style="position:sticky;top:0;z-index:9;display:flex;gap:10px;flex-wrap:wrap;background:#000;padding:10px 0 12px;margin-bottom:10px;border-bottom:2px solid #F2E9D8"><a href="./" style="background:#0d0d0d;color:#F2E9D8;text-decoration:none;font-weight:800;padding:10px 14px;border-radius:10px;font-size:15px">대시보드</a><a href="./틀폼.html" style="background:#F2E9D8;color:#111;text-decoration:none;font-weight:800;padding:10px 14px;border-radius:10px;font-size:15px">틀 넣기 · 다 됐어</a><a href="./트렌드/삼성전자.html" style="background:#0d0d0d;color:#F2E9D8;text-decoration:none;font-weight:800;padding:10px 14px;border-radius:10px;font-size:15px">삼성전자 트렌드</a><a href="./트렌드/테슬라.html" style="background:#0d0d0d;color:#F2E9D8;text-decoration:none;font-weight:800;padding:10px 14px;border-radius:10px;font-size:15px">테슬라 트렌드</a><a href="./편집.html?boss" style="background:#0d0d0d;color:#3DDC84;text-decoration:none;font-weight:800;padding:10px 14px;border-radius:10px;font-size:15px">편집자용</a><a href="./팀.html" style="background:#0d0d0d;color:#FFC480;text-decoration:none;font-weight:800;padding:10px 14px;border-radius:10px;font-size:15px">팀 업무</a></div>
 <h1>틀 넣기</h1>
 <div class="sub">적고 "틀 보내기"를 누르면 바로 회사 컴퓨터로 갑니다(1분 안에 받음). 안 될 때만 아래 텔레그램 단추를 쓰세요.</div>
-<div class="trbar"><button type="button" onclick="트렌드('삼성전자')">📈 삼성전자 트렌드 보면서 쓰기</button><button type="button" onclick="트렌드('테슬라')">📈 테슬라 트렌드</button></div>
-<div id="트렌드칸"><div class="tt"><span id="트렌드이름">트렌드</span><a href="#" onclick="트렌드('');return false;">✕ 닫기</a></div><iframe id="트렌드창" title="트렌드"></iframe></div>
-<script>function 트렌드(n){const k=document.getElementById('트렌드칸');if(!n){k.classList.remove('show');return;}document.getElementById('트렌드창').src='트렌드/'+encodeURIComponent(n)+'.html';document.getElementById('트렌드이름').textContent=n+' 트렌드 — 위에서 보면서 아래 칸에 쓰세요 (안에서 스크롤)';k.classList.add('show');}</script>
+<div class="trbar"><button type="button" onclick="트렌드('삼성전자')">📈 트렌드 보면서 쓰기</button></div>
+<div id="트렌드칸"><div class="tt"><button type="button" data-n="삼성전자" onclick="트렌드('삼성전자')">삼성전자</button><button type="button" data-n="테슬라" onclick="트렌드('테슬라')">테슬라</button><span class="when" id="트렌드때"></span><button type="button" onclick="트렌드('')">✕</button></div><div id="트렌드목록">불러오는 중…</div></div>
+<script>
+const 트렌드저장={};
+async function 트렌드(n){const k=document.getElementById('트렌드칸');if(!n){k.classList.remove('show');document.body.classList.remove('tr-open');return;}
+  k.classList.add('show');document.body.classList.add('tr-open');k.querySelectorAll('.tt button[data-n]').forEach(b=>b.classList.toggle('on',b.dataset.n===n));
+  const 목록=document.getElementById('트렌드목록');목록.textContent='불러오는 중…';
+  try{const h=트렌드저장[n]||(트렌드저장[n]=await (await fetch('트렌드/'+encodeURIComponent(n)+'.html?t='+Date.now())).text());
+    const d=new DOMParser().parseFromString(h,'text/html');
+    const 때=(d.body.innerText.match(/최신으로 바뀐 때[^\n]*/)||[''])[0];document.getElementById('트렌드때').textContent=때.replace('최신으로 바뀐 때','갱신').slice(0,40);
+    const 카드=[...d.querySelectorAll('.card')].slice(0,40);
+    목록.innerHTML=카드.map((c,i)=>{const a=c.querySelector('a.thumbwrap'),img=c.querySelector('img'),t=c.querySelector('.title'),ch=c.querySelector('.chan'),v=c.querySelector('.vel');
+      const 제목=(t?t.textContent:'').trim();return '<div class="tr" title="누르면 제목이 복사됩니다" data-t="'+제목.replace(/"/g,'&quot;')+'"><img src="'+(img?img.getAttribute('src'):'')+'" alt=""><div><div class="tl"><span class="rk">'+(i+1)+'</span>'+제목.replace(/</g,'&lt;')+'</div><div class="mt">'+((ch?ch.textContent:'').trim())+' · <b>'+((v?v.textContent:'').trim())+'</b></div></div></div>';}).join('')||'트렌드가 없습니다';
+    목록.querySelectorAll('.tr').forEach(r=>r.onclick=async()=>{try{await navigator.clipboard.writeText(r.dataset.t);r.style.outline='2px solid #3DDC84';setTimeout(()=>r.style.outline='',600);}catch(e){}});
+  }catch(e){목록.textContent='트렌드를 못 불러왔습니다';}}
+</script>
 
 <div class="card">
   <b>제목·썸네일 틀</b>
