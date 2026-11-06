@@ -22,7 +22,7 @@ a{color:#FFB38A}
 #트렌드칸.show{display:flex;flex-direction:column}
 #트렌드칸 .tt{display:flex;gap:6px;align-items:center;padding:6px 8px;border-bottom:1.5px solid #3a3a3a;font-size:13px;color:#FFC480}
 #트렌드칸 .tt button{width:auto;margin:0;padding:4px 10px;font-size:13px;box-shadow:none}#트렌드칸 .tt button.on{background:#FFC480;color:#111}#트렌드칸 .tt button:not(.on){background:#0d0d0d;color:var(--ink)}
-#트렌드칸 .tt .when{margin-left:auto;color:var(--mute);font-size:12px}
+#트렌드칸 .tt .when{margin-left:auto;color:var(--mute);font-size:12px}#트렌드칸 .tt #순조회,#트렌드칸 .tt #순시간{background:#0d0d0d;color:var(--ink)}#트렌드칸 .tt #순조회.on,#트렌드칸 .tt #순시간.on{background:#9CC4FF;color:#111}
 #트렌드목록{overflow-y:auto;max-height:46vh;padding:6px}
 .tr{display:grid;grid-template-columns:132px 1fr;gap:8px;padding:6px 2px;border-bottom:1px dashed #2a2a2a;cursor:pointer}.tr:hover{background:#151515}
 .tr img{width:132px;height:74px;object-fit:cover;border-radius:4px;background:#222}.tr .tl{font-size:13.5px;line-height:1.35;color:#F2E9D8}.tr .mt{font-size:11.5px;color:var(--mute);margin-top:3px}.tr .mt b{color:#FFC480;font-weight:700}
@@ -32,16 +32,16 @@ a{color:#FFB38A}
 <h1>틀 넣기</h1>
 <div class="sub">적고 "틀 보내기"를 누르면 바로 회사 컴퓨터로 갑니다(1분 안에 받음). 안 될 때만 아래 텔레그램 단추를 쓰세요.</div>
 <div class="trbar"><button type="button" onclick="트렌드('삼성전자')">📈 트렌드 보면서 쓰기</button></div>
-<div id="트렌드칸"><div class="tt"><button type="button" data-n="삼성전자" onclick="트렌드('삼성전자')">삼성전자</button><button type="button" data-n="테슬라" onclick="트렌드('테슬라')">테슬라</button><span class="when" id="트렌드때"></span><button type="button" onclick="트렌드('')">✕</button></div><div id="트렌드목록">불러오는 중…</div></div>
+<div id="트렌드칸"><div class="tt"><button type="button" data-n="삼성전자" onclick="트렌드('삼성전자')">삼성전자</button><button type="button" data-n="테슬라" onclick="트렌드('테슬라')">테슬라</button><button type="button" id="순조회" class="on" onclick="트렌드순='조회';트렌드(지금트렌드)">조회순</button><button type="button" id="순시간" onclick="트렌드순='시간당';트렌드(지금트렌드)">시간당순</button><span class="when"><span id="트렌드수"></span> · <span id="트렌드때"></span></span><button type="button" onclick="트렌드('')">✕</button></div><div id="트렌드목록">불러오는 중…</div></div>
 <script>
-const 트렌드저장={};
+const 트렌드저장={};let 트렌드순='조회',지금트렌드='삼성전자';
 async function 트렌드(n){const k=document.getElementById('트렌드칸');if(!n){k.classList.remove('show');document.body.classList.remove('tr-open');return;}
-  k.classList.add('show');document.body.classList.add('tr-open');k.querySelectorAll('.tt button[data-n]').forEach(b=>b.classList.toggle('on',b.dataset.n===n));
+  지금트렌드=n;document.getElementById('순조회').classList.toggle('on',트렌드순==='조회');document.getElementById('순시간').classList.toggle('on',트렌드순==='시간당');k.classList.add('show');document.body.classList.add('tr-open');k.querySelectorAll('.tt button[data-n]').forEach(b=>b.classList.toggle('on',b.dataset.n===n));
   const 목록=document.getElementById('트렌드목록');목록.textContent='불러오는 중…';
-  try{const h=트렌드저장[n]||(트렌드저장[n]=await (await fetch('트렌드/'+encodeURIComponent(n)+'.html?t='+Date.now())).text());
+  try{const h=트렌드저장[n]||(트렌드저장[n]=await (await fetch('트렌드/'+encodeURIComponent(n+'_1주')+'.html?t='+Date.now())).text());
     const d=new DOMParser().parseFromString(h,'text/html');
     const 때=(d.body.innerText.match(/최신으로 바뀐 때[^\n]*/)||[''])[0];document.getElementById('트렌드때').textContent=때.replace('최신으로 바뀐 때','갱신').slice(0,40);
-    const 카드=[...d.querySelectorAll('.card')].slice(0,40);
+    const 숫자=(c,앞)=>{const x=[...c.querySelectorAll('.stats span')].map(e=>e.textContent.trim()).find(e=>e.startsWith(앞));return x?Number(x.replace(/[^0-9]/g,''))||0:0;};/* 11/06 사장님: 최근 1주일 · 조회 3만 이상만 · 80개 넘게 · 최상위부터 */const 카드=[...d.querySelectorAll('.card')].filter(c=>숫자(c,'조회')>=30000).sort((a,b)=>트렌드순==='시간당'?숫자(b,'시간당')-숫자(a,'시간당'):숫자(b,'조회')-숫자(a,'조회')).slice(0,120);document.getElementById('트렌드수').textContent=카드.length+'편 (조회 3만↑)';
     목록.innerHTML=카드.map((c,i)=>{const a=c.querySelector('a.thumbwrap'),img=c.querySelector('img'),t=c.querySelector('.title'),ch=c.querySelector('.chan'),v=c.querySelector('.vel');
       const 제목=(t?t.textContent:'').trim();const 칸들=[...c.querySelectorAll('.stats span')].map(x=>x.textContent.trim()).filter(x=>x&&x!=='·');const 조회=칸들.find(x=>x.startsWith('조회'))||'',전=칸들.find(x=>/전$/.test(x))||'';return '<div class="tr" title="누르면 제목이 복사됩니다" data-t="'+제목.replace(/"/g,'&quot;')+'"><img src="'+(img?img.getAttribute('src'):'')+'" alt=""><div><div class="tl"><span class="rk">'+(i+1)+'</span>'+제목.replace(/</g,'&lt;')+'</div><div class="mt">'+((ch?ch.textContent:'').trim())+' · <b>'+((v?v.textContent:'').trim())+'</b>'+(조회?' · <b style="color:#9CC4FF">'+조회+'</b>':'')+(전?' · '+전:'')+'</div></div></div>';}).join('')||'트렌드가 없습니다';
     목록.querySelectorAll('.tr').forEach(r=>r.onclick=async()=>{try{await navigator.clipboard.writeText(r.dataset.t);r.style.outline='2px solid #3DDC84';setTimeout(()=>r.style.outline='',600);}catch(e){}});
