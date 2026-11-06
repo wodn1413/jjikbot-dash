@@ -91,7 +91,7 @@ const f=(x)=>x.getFullYear()+"-"+String(x.getMonth()+1).padStart(2,"0")+"-"+Stri
 const 요일=["일","월","화","수","목","금","토"];
 const 말날=(s)=>{const [y,m,d]=s.split("-").map(Number);return m+"월 "+d+"일";};
 document.querySelectorAll('.days').forEach(box=>{const id=box.dataset.for,hid=document.getElementById(id),직접=document.getElementById(id+'직접');
-  [["어제",-1],["오늘",0],["내일",1],["모레",2],["글피",3],["4일 뒤",4]].forEach(([n,d])=>{const dt=new Date();dt.setDate(dt.getDate()+d);const b=document.createElement('button');b.type='button';b.innerHTML=n+'<small>'+(dt.getMonth()+1)+'/'+dt.getDate()+' ('+요일[dt.getDay()]+')</small>';b.onclick=()=>{hid.value=f(dt);직접.value=f(dt);box.querySelectorAll('button').forEach(x=>x.classList.remove('on'));b.classList.add('on');};box.appendChild(b);if(d===0)b.click();});
+  [["어제",-1],["오늘",0],["내일",1],["",2],["",3],["",4]].forEach(([n,d])=>{const dt=new Date();dt.setDate(dt.getDate()+d);const b=document.createElement('button');b.type='button';const 날글=(dt.getMonth()+1)+'/'+dt.getDate()+' ('+요일[dt.getDay()]+')';b.innerHTML=n?n+'<small>'+날글+'</small>':날글+'<small>&nbsp;</small>';   // 11/06 사장님 "모레·글피·4일 뒤 빼고 날짜·요일만"b.onclick=()=>{hid.value=f(dt);직접.value=f(dt);box.querySelectorAll('button').forEach(x=>x.classList.remove('on'));b.classList.add('on');};box.appendChild(b);if(d===0)b.click();});
   직접.addEventListener('change',()=>{hid.value=직접.value;box.querySelectorAll('button').forEach(x=>x.classList.remove('on'));});});
 const v=(id)=>document.getElementById(id).value.trim();
 function 틀글(){if(!v('제목')||!v('윗줄')||!v('아랫줄')){alert('제목·윗줄·아랫줄을 다 적어 주세요');return;}
