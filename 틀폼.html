@@ -54,12 +54,12 @@ async function 트렌드(n){const k=document.getElementById('트렌드칸');if(!
   <div class="days" data-for="날1"></div><input type="hidden" id="날1">
   <div class="pick">다른 날이면 <input type="date" id="날1직접"></div>
   <label>채널</label><select id="채널1" onchange="라벨칸맞춤()">
-    <option value="주식독학">주식독학 1편 (21시)</option>
-    <option value="주식독학_2">주식독학 2편 (12시)</option>
+    <option value="주식독학">주식독학 1편 (18시)</option>
+    <option value="주식독학_2">주식독학 2편 (다음날 6시)</option>
     <option value="주식독학_3">주식독학 3편 (17시)</option>
-    <option value="주식은지식이다">주식은 지식이다</option>
-    <option value="테슬라">테슬라 (18시)</option>
-    <option value="투자미리보기">투자미리보기 (21시)</option>
+    <option value="주식은지식이다">주식은 지식이다 (15시)</option>
+    <option value="테슬라">테슬라 (빈시간)</option>
+    <option value="투자미리보기">투자미리보기 (11시)</option>
   </select>
   <label>제목 (앞머리 <span id="앞머리글">[ 삼성전자 주가전망 ]</span> 은 자동으로 붙음)</label><textarea id="제목" placeholder="반도체 폭락 비상상황 발생! 진짜 큰일난건가?"></textarea>
   <div id="라벨칸" style="display:none"><label>썸네일 상단 라벨 (투자미리보기만 · 작은 노란 라벨, 짧게)</label><input id="상단라벨" placeholder="이번 주 체크"></div>
@@ -84,8 +84,8 @@ async function 트렌드(n){const k=document.getElementById('트렌드칸');if(!
     <option value="주식독학_2">주식독학 2편</option>
     <option value="주식독학_3">주식독학 3편 (17시)</option>
     <option value="테슬라">테슬라</option>
-    <option value="투자미리보기">투자미리보기 (21시)</option>
-    <option value="주식은지식이다">주식은 지식이다</option>
+    <option value="투자미리보기">투자미리보기 (11시)</option>
+    <option value="주식은지식이다">주식은 지식이다 (15시)</option>
     <option value="">그날 전부</option>
   </select>
   <button type="button" onclick="됐어글()">다 됐어 보내기</button>
