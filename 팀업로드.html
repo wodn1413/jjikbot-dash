@@ -79,6 +79,8 @@ function 틀글(){if(!사람){alert('먼저 이름을 눌러 주세요');return;
   설문보내기(줄.join('\n'),document.getElementById('상태1')).then(ok=>{if(ok){for(const id of ['제목','윗줄','아랫줄']){document.getElementById(id).value='';}}});}
 function 보내기(id){const t=document.getElementById(id).value;location.href='https://t.me/share/url?url='+encodeURIComponent(t);}
 /* 각자 주소(?p=이름)로 들어오면 그 사람으로 바로 열고, 사장님 메뉴 띠는 숨긴다 */
-const 처음=new URLSearchParams(location.search).get('p');if(처음&&권한[처음]){고르기(처음);const m=document.getElementById('메뉴');if(m)m.style.display='none';}
+/* 11/10 사장님 "팀원은 팀 업무·팀 업로드까지만 보고 나머지는 나만" — 팀원 주소에선 메뉴 띠·다른 사람 단추를 숨기고, 맨 위에 팀 업무 ↔ 팀 업로드 단추만 */
+const 처음=new URLSearchParams(location.search).get('p');if(처음&&권한[처음]){고르기(처음);const m=document.getElementById('메뉴');if(m)m.style.display='none';사람단추.style.display='none';
+  const 띠=document.createElement('div');띠.style.cssText='display:flex;gap:10px;margin-bottom:14px';띠.innerHTML='<a href="./팀_'+encodeURIComponent(처음)+'.html" style="flex:1;text-align:center;background:#0d0d0d;color:#F2E9D8;text-decoration:none;font-weight:800;padding:12px;border-radius:8px;border:2.5px solid #F2E9D8">← 팀 업무</a><a style="flex:1;text-align:center;background:#FFC480;color:#111;font-weight:800;padding:12px;border-radius:8px;border:2.5px solid #F2E9D8">팀 업로드</a>';document.body.insertBefore(띠,document.body.firstChild);}
 </script>
 </body></html>
