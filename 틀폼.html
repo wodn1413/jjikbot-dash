@@ -62,7 +62,7 @@ async function 트렌드(n){const k=document.getElementById('트렌드칸');if(!
     <option value="투자미리보기">투자미리보기 (12시)</option>
   </select>
   <label>제목 (앞머리 <span id="앞머리글">[ 삼성전자 주가전망 ]</span> 은 자동으로 붙음)</label><textarea id="제목" placeholder="반도체 폭락 비상상황 발생! 진짜 큰일난건가?"></textarea>
-  <div id="라벨칸" style="display:none"><label>썸네일 상단 라벨 (투자미리보기만 · 작은 노란 라벨, 짧게)</label><input id="상단라벨" placeholder="이번 주 체크"></div>
+  <div id="라벨칸" style="display:none"><label>썸네일 상단 라벨 (투자미리보기·주식은 지식이다 · 작은 노란 라벨, 짧게 · 비우면 없음)</label><input id="상단라벨" placeholder="이번 주 체크"></div>
   <label>썸네일 윗줄 (노랑, 8~12자)</label><input id="윗줄" placeholder="비상상황 발생!!">
   <label>썸네일 아랫줄 (흰, 8~12자)</label><input id="아랫줄" placeholder="다음주 '이것' 놀라지 마세요">
   <label>사진 고르기 (선택 · 파일 이름에 든 말, 예 바닥지지)</label><input id="사진" placeholder="비우면 그날 날짜 사진">
@@ -125,10 +125,10 @@ document.querySelectorAll('.days').forEach(box=>{const id=box.dataset.for,hid=do
   /* 11/06 사장님: 오늘 + 다음 4일, "11월 7일 (토요일)" 꼴로만 */ [0,1,2,3,4].forEach((d)=>{const dt=new Date();dt.setDate(dt.getDate()+d);const b=document.createElement('button');b.type='button';const 날글=(dt.getMonth()+1)+'월 '+dt.getDate()+'일 ('+요일[dt.getDay()]+'요일)';b.innerHTML=d===0?'오늘<small>'+날글+'</small>':날글;b.onclick=()=>{hid.value=f(dt);직접.value=f(dt);box.querySelectorAll('button').forEach(x=>x.classList.remove('on'));b.classList.add('on');};box.appendChild(b);if(d===0)b.click();});
   직접.addEventListener('change',()=>{hid.value=직접.value;box.querySelectorAll('button').forEach(x=>x.classList.remove('on'));});});
 const v=(id)=>document.getElementById(id).value.trim();
-function 라벨칸맞춤(){const 투미=v('채널1')==='투자미리보기';document.getElementById('라벨칸').style.display=투미?'block':'none';document.getElementById('앞머리글').textContent=투미?'삼성전자':v('채널1')==='주식은지식이다'?'[ 삼성전자 ]':'[ 삼성전자 주가전망 ]';}
+function 라벨칸맞춤(){const 투미=v('채널1')==='투자미리보기';document.getElementById('라벨칸').style.display=(투미||v('채널1')==='주식은지식이다')?'block':'none';document.getElementById('앞머리글').textContent=투미?'삼성전자':v('채널1')==='주식은지식이다'?'[ 삼성전자 ]':'[ 삼성전자 주가전망 ]';}
 라벨칸맞춤();
 function 틀글(){if(!v('제목')||!v('윗줄')||!v('아랫줄')){alert('제목·윗줄·아랫줄을 다 적어 주세요');return;}
-  const 줄=[말날(v('날1'))+' 업로드','','['+v('채널1')+']','  제목 : '+v('제목'),'  썸네일 윗줄 : '+v('윗줄'),'  썸네일 아랫줄 : '+v('아랫줄')];if(v('채널1')==='투자미리보기'&&v('상단라벨'))줄.push('  썸네일 상단 라벨 : '+v('상단라벨'));if(v('사진'))줄.push('  사진 : '+v('사진'));
+  const 줄=[말날(v('날1'))+' 업로드','','['+v('채널1')+']','  제목 : '+v('제목'),'  썸네일 윗줄 : '+v('윗줄'),'  썸네일 아랫줄 : '+v('아랫줄')];if((v('채널1')==='투자미리보기'||v('채널1')==='주식은지식이다')&&v('상단라벨'))줄.push('  썸네일 상단 라벨 : '+v('상단라벨'));if(v('사진'))줄.push('  사진 : '+v('사진'));
   document.getElementById('글1').value=줄.join('\n');document.getElementById('out1').classList.add('show');설문보내기(줄.join('\n'),document.getElementById('상태1')).then(ok=>{if(ok){for(const id of ['제목','윗줄','아랫줄','사진','상단라벨']){const e=document.getElementById(id);if(e)e.value='';}const t=document.getElementById('제목');if(t)t.focus();}});   /* 11/06 사장님: 보내면 칸 비우기 */}
 function 됐어글(){const ch=v('채널2');const 글='다 됐어 '+말날(v('날2'))+(ch?' '+ch:'');document.getElementById('글2').value=글;document.getElementById('out2').classList.add('show');설문보내기(글,document.getElementById('상태2'));}
 function 보내기(id){const t=document.getElementById(id).value;location.href='https://t.me/share/url?url='+encodeURIComponent(t);}
