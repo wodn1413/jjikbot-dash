@@ -40,9 +40,12 @@ a{color:#FFB38A}
   <div style="display:flex;gap:10px;align-items:flex-start"><div class="hours" id="시각단추" style="flex:1"></div>
     <div style="width:118px;flex:none;font-size:12.5px;color:var(--mute);text-align:center">분까지 직접<input type="time" id="시각직접" style="padding:8px 4px;font-size:14px;margin-top:4px"><div id="고른시각" style="margin-top:8px;font-size:18px;font-weight:800;color:var(--acc)">-</div></div></div>
   <input type="hidden" id="시각">
-  <label>제목 (채널 앞머리는 자동으로 붙음)</label><textarea id="제목" placeholder="영상 제목"></textarea>
+  <label>제목 (적은 그대로 올라감 — [ 삼성전자 ] 같은 앞머리도 직접 쓰기)</label><textarea id="제목" placeholder="[ 삼성전자 ] 영상 제목"></textarea>
   <label>썸네일 윗줄 (썸네일 그림을 직접 넣었으면 비워도 됨)</label><input id="윗줄">
   <label>썸네일 아랫줄</label><input id="아랫줄">
+  <!-- 11/10 사장님 "본인 멘트 링크 각 채널별로 쓸 수 있는 공간" — 채널마다 이 기기에 기억, 보낼 때 틀에 같이 감. 집 컴퓨터도 기억해서 비우면 지난번 것을 씀. 주식독학은 댓글 없음 -->
+  <div id="멘트칸"><label>댓글 멘트·링크 (<span id="멘트채널"></span> 전용 · 한 번 적으면 기억 · 고정댓글은 아님)</label>
+    <textarea id="멘트" style="min-height:100px" placeholder="시청해 주셔서 감사합니다!&#10;&#10;무료 자료 신청 : https://..."></textarea></div>
   <button type="button" onclick="틀글()">틀 보내기</button>
   <div class="out" id="out1"><b id="상태1"></b><textarea id="글1" readonly></textarea>
     <button type="button" class="t" onclick="보내기('글1')">안 되면 텔레그램으로 보내기</button>
@@ -68,7 +71,12 @@ function 고르기(n){사람=n;사람단추.querySelectorAll('button').forEach(b
   const s=document.getElementById('채널1');s.innerHTML=권한[n].map(([v,t])=>'<option value="'+v+'">'+t+'</option>').join('');예시맞춤();
   try{history.replaceState(null,'','?p='+encodeURIComponent(n));}catch(e){}}
 document.getElementById('채널1').addEventListener('change',예시맞춤);
-function 예시맞춤(){const d=(v('날1')||'').slice(5).replace('-','');const ch=v('채널1');document.getElementById('예시').textContent=d+' '+ch+' '+사람+'.mp4';document.getElementById('예시2').textContent=d+' '+ch+' '+사람+' 썸네일.jpg';}
+const 멘트열쇠=()=>'팀멘트_'+사람+'_'+v('채널1');
+function 멘트맞춤(){const 독학=/^주식독학/.test(v('채널1'));document.getElementById('멘트칸').style.display=독학?'none':'block';
+  const o=document.getElementById('채널1').selectedOptions[0];document.getElementById('멘트채널').textContent=o?o.textContent:'';
+  let t='';try{t=localStorage.getItem(멘트열쇠())||'';}catch(e){}document.getElementById('멘트').value=t;}
+document.getElementById('멘트').addEventListener('input',()=>{try{localStorage.setItem(멘트열쇠(),document.getElementById('멘트').value);}catch(e){}});
+function 예시맞춤(){멘트맞춤();const d=(v('날1')||'').slice(5).replace('-','');const ch=v('채널1');document.getElementById('예시').textContent=d+' '+ch+' '+사람+'.mp4';document.getElementById('예시2').textContent=d+' '+ch+' '+사람+' 썸네일.jpg';}
 const f=(x)=>x.getFullYear()+"-"+String(x.getMonth()+1).padStart(2,"0")+"-"+String(x.getDate()).padStart(2,"0");
 const 요일=["일","월","화","수","목","금","토"];
 const 말날=(s)=>{const [y,m,d]=s.split("-").map(Number);return m+"월 "+d+"일";};
@@ -86,6 +94,7 @@ function 틀글(){if(!사람){alert('먼저 이름을 눌러 주세요');return;
   if(!v('제목')){alert('제목을 적어 주세요');return;}
   if(!v('시각')){alert('올릴 시각을 정해 주세요');return;}
   const 줄=[말날(v('날1'))+' 업로드','','['+v('채널1')+']','  보낸 사람 : '+사람,'  올릴 시각 : '+v('시각'),'  제목 : '+v('제목'),'  썸네일 윗줄 : '+(v('윗줄')||'-'),'  썸네일 아랫줄 : '+(v('아랫줄')||'-')];
+  if(!/^주식독학/.test(v('채널1'))&&v('멘트'))줄.push('  댓글 멘트 : '+v('멘트').replace(/\r?\n/g,' ⏎ '));
   document.getElementById('글1').value=줄.join('\n');document.getElementById('out1').classList.add('show');
   설문보내기(줄.join('\n'),document.getElementById('상태1')).then(ok=>{if(ok){for(const id of ['제목','윗줄','아랫줄']){document.getElementById(id).value='';}}});}
 function 보내기(id){const t=document.getElementById(id).value;location.href='https://t.me/share/url?url='+encodeURIComponent(t);}
