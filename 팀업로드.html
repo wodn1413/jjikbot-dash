@@ -72,7 +72,7 @@ function 고르기(n){사람=n;사람단추.querySelectorAll('button').forEach(b
   try{history.replaceState(null,'','?p='+encodeURIComponent(n));}catch(e){}}
 document.getElementById('채널1').addEventListener('change',예시맞춤);
 const 멘트열쇠=()=>'팀멘트_'+사람+'_'+v('채널1');
-function 멘트맞춤(){document.getElementById("멘트칸").style.display="block";
+function 멘트맞춤(){const 독학=/^주식독학/.test(v("채널1"));document.getElementById("멘트칸").style.display=독학?"none":"block";   /* 11/10 사장님 "주식독학은 전부 이 칸 빼 — 애들이 고정댓글로 안 하고 올려 버릴 것 같다" */
   const o=document.getElementById('채널1').selectedOptions[0];document.getElementById('멘트채널').textContent=o?o.textContent:'';
   let t='';try{t=localStorage.getItem(멘트열쇠())||'';}catch(e){}document.getElementById('멘트').value=t;}
 document.getElementById('멘트').addEventListener('input',()=>{try{localStorage.setItem(멘트열쇠(),document.getElementById('멘트').value);}catch(e){}});
@@ -94,7 +94,7 @@ function 틀글(){if(!사람){alert('먼저 이름을 눌러 주세요');return;
   if(!v('제목')){alert('제목을 적어 주세요');return;}
   if(!v('시각')){alert('올릴 시각을 정해 주세요');return;}
   const 줄=[말날(v('날1'))+' 업로드','','['+v('채널1')+']','  보낸 사람 : '+사람,'  올릴 시각 : '+v('시각'),'  제목 : '+v('제목'),'  썸네일 윗줄 : '+(v('윗줄')||'-'),'  썸네일 아랫줄 : '+(v('아랫줄')||'-')];
-  if(v("멘트"))줄.push('  댓글 멘트 : '+v('멘트').replace(/\r?\n/g,' ⏎ '));
+  if(!/^주식독학/.test(v("채널1"))&&v("멘트"))줄.push('  댓글 멘트 : '+v('멘트').replace(/\r?\n/g,' ⏎ '));
   document.getElementById('글1').value=줄.join('\n');document.getElementById('out1').classList.add('show');
   설문보내기(줄.join('\n'),document.getElementById('상태1')).then(ok=>{if(ok){for(const id of ['제목','윗줄','아랫줄']){document.getElementById(id).value='';}}});}
 function 보내기(id){const t=document.getElementById(id).value;location.href='https://t.me/share/url?url='+encodeURIComponent(t);}
