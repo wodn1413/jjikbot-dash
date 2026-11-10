@@ -52,8 +52,9 @@ a{color:#FFB38A}
 
 <script>
 const 설문='https://docs.google.com/forms/d/e/1FAIpQLSeBdbfpt0WiF4dvseIEs-7otufSdC4KY8HCSZDcJznM0q6eXA/formResponse', 칸='entry.1521054935';
-const 같이=[['주식독학','주식독학 1편'],['주식독학_2','주식독학 2편'],['테슬라','테슬라 주주회관'],['시바이누주주회관','시바이누 주주회관']];
-const 권한={강한빛:[...같이,['한국경제학','한국경제학'],['차트앤뉴스','차트&뉴스 C&N'],['주식인','주식인']],서지호:같이,용전:같이};
+/* 11/10 사장님 "서지호·용전은 주식독학 2편은 없어도 된다" */
+const 같이=[['주식독학','주식독학 1편'],['테슬라','테슬라 주주회관'],['시바이누주주회관','시바이누 주주회관']];
+const 권한={강한빛:[['주식독학','주식독학 1편'],['주식독학_2','주식독학 2편'],['테슬라','테슬라 주주회관'],['시바이누주주회관','시바이누 주주회관'],['한국경제학','한국경제학'],['차트앤뉴스','차트&뉴스 C&N'],['주식인','주식인']],서지호:같이,용전:같이};
 let 사람='';
 const 사람단추=document.getElementById('사람단추');
 Object.keys(권한).forEach(n=>{const b=document.createElement('button');b.type='button';b.textContent=n;b.onclick=()=>고르기(n);사람단추.appendChild(b);});
