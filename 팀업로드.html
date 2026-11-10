@@ -20,6 +20,7 @@ button.g{background:#0d0d0d;color:var(--ink)}button.t{background:#9CC4FF;color:#
 .pick{margin-top:10px;font-size:13px;color:var(--mute)}.pick input{width:auto;padding:6px 10px;font-size:14px;margin-left:6px}
 .note{font-size:12.5px;color:var(--mute);margin-top:10px;line-height:1.6}.note b{color:var(--acc)}
 .out{display:none;margin-top:12px}.out textarea{min-height:150px;font-size:14px;background:#0d0d0d}.out.show{display:block}.out b{display:block;margin-bottom:6px;color:var(--ok)}
+.hours{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}.hours button{margin:0;padding:10px 0;font-size:14px;background:#0d0d0d;color:var(--ink);box-shadow:2px 2px 0 #3a3a3a}.hours button.on{background:var(--acc);color:#111}
 #틀칸{display:none}#틀칸.show{display:block}
 a{color:#FFB38A}
 </style></head><body><div id="메뉴" style="position:sticky;top:0;z-index:9;display:flex;gap:10px;flex-wrap:wrap;background:#000;padding:10px 0 12px;margin-bottom:10px;border-bottom:2px solid #F2E9D8"><a href="./" style="background:#0d0d0d;color:#F2E9D8;text-decoration:none;font-weight:800;padding:10px 14px;border-radius:10px;font-size:15px">대시보드</a><a href="./틀폼.html" style="background:#FFC480;color:#111;text-decoration:none;font-weight:800;padding:10px 14px;border-radius:10px;font-size:15px">틀 넣기 · 다 됐어</a><a href="./트렌드/삼성전자.html" style="background:#0d0d0d;color:#F2E9D8;text-decoration:none;font-weight:800;padding:10px 14px;border-radius:10px;font-size:15px">삼성전자 트렌드</a><a href="./트렌드/테슬라.html" style="background:#0d0d0d;color:#F2E9D8;text-decoration:none;font-weight:800;padding:10px 14px;border-radius:10px;font-size:15px">테슬라 트렌드</a><a href="./편집.html?boss" style="background:#0d0d0d;color:#3DDC84;text-decoration:none;font-weight:800;padding:10px 14px;border-radius:10px;font-size:15px">편집자용</a><a href="./팀.html" style="background:#0d0d0d;color:#FFC480;text-decoration:none;font-weight:800;padding:10px 14px;border-radius:10px;font-size:15px">팀 업무</a><a href="./팀업로드.html" style="background:#F2E9D8;color:#111;text-decoration:none;font-weight:800;padding:10px 14px;border-radius:10px;font-size:15px">팀 업로드</a><a href="./시간표.html" style="background:#0d0d0d;color:#9CC4FF;text-decoration:none;font-weight:800;padding:10px 14px;border-radius:10px;font-size:15px">시간별 업로드</a></div>
@@ -34,7 +35,11 @@ a{color:#FFB38A}
   <div class="days" data-for="날1"></div><input type="hidden" id="날1">
   <div class="pick">다른 날이면 <input type="date" id="날1직접"></div>
   <label>채널</label><select id="채널1"></select>
-  <label>올릴 시각</label><input type="time" id="시각" value="19:00">
+  <label>올릴 시각 (눌러서 고르기)</label>
+  <!-- 11/10 사장님 "클릭해서 시간 고를 수 있도록, 본인이 시간 수정하는 건 옆에 따로" -->
+  <div style="display:flex;gap:10px;align-items:flex-start"><div class="hours" id="시각단추" style="flex:1"></div>
+    <div style="width:118px;flex:none;font-size:12.5px;color:var(--mute);text-align:center">분까지 직접<input type="time" id="시각직접" style="padding:8px 4px;font-size:14px;margin-top:4px"><div id="고른시각" style="margin-top:8px;font-size:18px;font-weight:800;color:var(--acc)">-</div></div></div>
+  <input type="hidden" id="시각">
   <label>제목 (채널 앞머리는 자동으로 붙음)</label><textarea id="제목" placeholder="영상 제목"></textarea>
   <label>썸네일 윗줄 (썸네일 그림을 직접 넣었으면 비워도 됨)</label><input id="윗줄">
   <label>썸네일 아랫줄</label><input id="아랫줄">
@@ -71,6 +76,11 @@ const v=(id)=>document.getElementById(id).value.trim();
 document.querySelectorAll('.days').forEach(box=>{const id=box.dataset.for,hid=document.getElementById(id),직접=document.getElementById(id+'직접');
   [0,1,2,3,4].forEach((d)=>{const dt=new Date();dt.setDate(dt.getDate()+d);const b=document.createElement('button');b.type='button';const 날글=(dt.getMonth()+1)+'월 '+dt.getDate()+'일 ('+요일[dt.getDay()]+'요일)';b.innerHTML=d===0?'오늘<small>'+날글+'</small>':날글;b.onclick=()=>{hid.value=f(dt);직접.value=f(dt);box.querySelectorAll('button').forEach(x=>x.classList.remove('on'));b.classList.add('on');예시맞춤();};box.appendChild(b);if(d===0)b.click();});
   직접.addEventListener('change',()=>{hid.value=직접.value;box.querySelectorAll('button').forEach(x=>x.classList.remove('on'));예시맞춤();});});
+{const box=document.getElementById('시각단추'),hid=document.getElementById('시각'),직접=document.getElementById('시각직접');
+  for(let h=0;h<24;h++){const t=String(h).padStart(2,'0')+':00';const b=document.createElement('button');b.type='button';b.textContent=t;
+    b.onclick=()=>{hid.value=t;직접.value=t;고른.textContent=t;box.querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b));};box.appendChild(b);}
+  const 고른=document.getElementById('고른시각');
+  직접.addEventListener('change',()=>{hid.value=직접.value;고른.textContent=직접.value||'-';box.querySelectorAll('button').forEach(x=>x.classList.toggle('on',x.textContent===직접.value));});}
 async function 설문보내기(글,상자){상자.textContent='보내는 중…';try{const fd=new FormData();fd.append(칸,글);await fetch(설문,{method:'POST',mode:'no-cors',body:fd});상자.textContent='보냈습니다 ✓ 1분 안에 받습니다. 결과는 텔레그램으로 갑니다.';return true;}catch(e){상자.textContent='못 보냈습니다 — 아래 단추로 텔레그램에 보내 주세요.';return false;}}
 function 틀글(){if(!사람){alert('먼저 이름을 눌러 주세요');return;}
   if(!v('제목')){alert('제목을 적어 주세요');return;}
